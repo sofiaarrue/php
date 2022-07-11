@@ -43,40 +43,49 @@ $aProductos[] = array(
 </head>
 
 <body>
-    <div class="row">
-        <div class="col-12">
-            <h1 class="text-center">Listado de productos</h1>
-        </div>
-        <div class="col-12">
-            <table class="table table-hover border">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Stock</th>
-                    <th>Precio</th>
-                    <th>Acción</th>
-                </tr>
-                <?php
-                    for ($contador = 0; $contador < count($aProductos); $contador++){
-                        
+    <main class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">Listado de productos</h1>
+            </div>
+            <div class="col-12">
+                <table class="table table-hover border">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Stock</th>
+                            <th>Precio</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+
+                    <?php
+                    for ($contador = 0; $contador < count($aProductos); $contador++) {
+
+                    ?>
+
+                        <tbody>
+                            <tr>
+                                <td><?php echo $aProductos[$contador]["nombre"]; ?> </td>
+                                <td><?php echo $aProductos[$contador]["marca"]; ?></td>
+                                <td><?php echo $aProductos[$contador]["modelo"]; ?></td>
+                                <td><?php
+                                    echo $aProductos[$contador]["stock"] <= 10 && $aProductos[$contador]["stock"] > 0 ? "Poco stock" : ($aProductos[$contador]["stock"] == 0 ? "Sin stock" : "Hay stock");
+                                    ?></td>
+                                <td><?php echo $aProductos[$contador]["precio"]; ?></td>
+                                <td><button class="btn btn-primary">Comprar</button></td>
+                            </tr>
+                        </tbody>
+
+                    <?php
                     }
-
-                ?>
-                    <tr>
-                        <td><?php echo $aProductos[$contador]["nombre"]; ?> </td>
-                        <td><?php echo $aProductos[$contador]["marca"]; ?></td>
-                        <td><?php echo $aProductos[$contador]["modelo"]; ?></td>
-                        <td><?php
-                            echo $aProductos[$contador]["stock"] <= 10 && $aProductos[$contador]["stock"] > 0 ? "Poco stock" : ($aProductos[$contador]["stock"] == 0 ? "Sin stock" : "Hay stock");
-                            ?></td>
-                        <td><?php echo $aProductos[$contador]["precio"]; ?></td>
-                        <td><button class="btn btn-primary">Comprar</button></td>
-                    </tr>
-            </table>
+                    ?>
+                </table>
+            </div>
         </div>
-    </div>
-
+    </main>
 
 </body>
 
