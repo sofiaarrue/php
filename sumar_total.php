@@ -27,6 +27,8 @@ $aProductos[] = array(
     "precio" => 45000,
 );
 
+$sumatoriaPrecios = 0;
+
 //print_r($aProductos);
 ?>
 
@@ -64,6 +66,7 @@ $aProductos[] = array(
                     <?php
                     for ($contador = 0; $contador < count($aProductos); $contador++) {
 
+                        $sumatoriaPrecios += $aProductos[$contador]["precio"];
                     ?>
 
                         <tbody>
@@ -83,6 +86,9 @@ $aProductos[] = array(
                     }
                     ?>
                 </table>
+            </div>
+            <div class="col-12">
+                <p>Subtotal:<?php echo $sumatoriaPrecios; ?>
             </div>
         </div>
     </main>
