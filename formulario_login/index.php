@@ -7,10 +7,11 @@ if ($_POST) {
     $usuario = $_POST["txtUsuario"];
     $clave = $_POST["txtClave"];
 
-if ($usuario != "" && $clave != "")
+if ($usuario != "" && $clave != ""){
     header("Location:acceso-confirmado.php");
-} else {
+}else{
     $mensaje = "Válido para usuarios registrados.";
+}
 }
 
 ?>

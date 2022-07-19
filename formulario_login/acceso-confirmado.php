@@ -26,10 +26,10 @@ error_reporting(E_ALL);
         </div>
         <div class="row">
             <div class="col-12 pb-3">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nobis placeat, iste officia quisquam libero aspernatur voluptatem quasi? Aperiam temporibus ipsa maxime ab vero molestiae ea consequatur expedita vel tempora?</p>
+                <p class="alert alert-success" role="alert">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad nobis placeat, iste officia quisquam libero aspernatur voluptatem quasi? Aperiam temporibus ipsa maxime ab vero molestiae ea consequatur expedita vel tempora?</p>
             </div>
             <div>
-                <button class="btn btn-primary">Salir</button>
+                <a href="index.php"><button class="btn btn-primary float-end">Salir</button></a>
             </div>
         </div>
     </main>
