@@ -20,7 +20,7 @@ error_reporting(E_ALL);
 <body>
     <main class="container">
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="col-12 text-center py-3">
                 <h1>Formulario de datos personales</h1>
             </div>
         </div>
@@ -44,7 +44,7 @@ error_reporting(E_ALL);
                         <input name="txtEdad" id="txtEdad" class="form-control" type="number">
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <button type="submit" class="btn btn-primary float-end">Enviar</button>
                     </div>
                 </form>
             </div>

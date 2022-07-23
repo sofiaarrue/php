@@ -4,28 +4,34 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-foreach ($aAlumnos as $alumno) {
-    
+function promediar($aNumeros)
+{
+    $suma = 0;
+
+    foreach ($aNumeros as $numero) {
+        $suma = $suma + $numero;
+    }
+
+    return $suma / count($aNumeros);
 }
 
 $aAlumnos = array();
 $aAlumnos[] = array(
     "alumno" => "Bernabe Paz",
-    "notas" => array(5, 7),
+    "aNotas" => array(5, 7),
 );
 $aAlumnos[] = array(
     "alumno" => "Sebastián Aguirre",
-    "notas" => array(6, 9),
+    "aNotas" => array(6, 9),
 );
 $aAlumnos[] = array(
     "alumno" => "Ana Valle",
-    "notas" => array(7, 8),
+    "aNotas" => array(7, 8),
 );
 $aAlumnos[] = array(
     "alumno" => "Monica Ledesma",
-    "notas" => array(8, 9),
+    "aNotas" => array(8, 9),
 );
-
 ?>
 
 <!DOCTYPE html>
@@ -42,27 +48,42 @@ $aAlumnos[] = array(
 <body>
     <main class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 text-center py-3">
                 <h1>Actas</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <table>
+                <table class="table table-hover border">
                     <thead>
-                        <th>Alumno</th>
-                        <th>Nota 1</th>
-                        <th>Nota 2</th>
-                        <th>Promedio</th>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Nota 1</th>
+                            <th>Nota 2</th>
+                            <th>Promedio</th>
+                        </tr>
                     </thead>
-                    <?php foreach ($aAlumnos as $alumno):?>
                     <tbody>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <?php $sumPromedios=0;
+
+                            foreach ($aAlumnos as $alumno):
+                                $promedio = promediar($alumno["aNotas"]);
+                                $sumPromedios += $promedio;
+                            ?>
+                        <tr>
+                            <td><?php echo $alumno["alumno"]; ?></td>
+                            <td><?php echo $alumno["aNotas"][0]; ?></td>
+                            <td><?php echo $alumno["aNotas"][1]; ?></td>
+                            <td><?php echo number_format($promedio, 2, ",", "."); ?></td>
+                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>Promedio de la cursada: <?php echo number_format(($sumPromedios / count($aAlumnos)), 2, ",", ".");?></p>
             </div>
         </div>
     </main>
