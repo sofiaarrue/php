@@ -33,11 +33,16 @@ if ($_POST) {
         //Actualiza el contenido de variable de session
         $_SESSION["listadoClientes"] = $aClientes;
     }
+
     if (isset($_POST["btnEliminar"])) {
         session_destroy();
-    } if (isset($_POST["btnTacho"])) {
-        $_SESSION["listadoClientes"] = $aClientes;
-        unset($_SESSION["listadoClientes"]);
+        $aClientes = array();
+    }
+
+    if (isset($_POST["pos"])) {
+        $pos = $_POST["pos"];
+        unset($aClientes["pos"]);
+        $aClientes = array();
     }
 }
 ?>
@@ -51,6 +56,7 @@ if ($_POST) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <title>Clientes</title>
 </head>
 
@@ -98,16 +104,15 @@ if ($_POST) {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($aClientes as $cliente) : ?>
+                        <?php foreach ($aClientes as $pos => $cliente) : ?>
                             <tr>
                                 <td><?php echo $cliente["nombre"]; ?></td>
                                 <td><?php echo $cliente["dni"]; ?></td>
                                 <td><?php echo $cliente["telefono"]; ?></td>
                                 <td><?php echo $cliente["edad"]; ?></td>
-                                <td><button type="submit" id="btnTacho" name="btnTacho"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                        </svg></button></td>
+                                <td>
+                                    <form method="POST"><button type="submit" id="btnTacho<?php echo $pos;?>" name="btnTacho"><i class="bi bi-trash"></i></button></form>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
