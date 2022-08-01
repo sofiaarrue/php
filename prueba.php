@@ -17,8 +17,9 @@ if ($stock > 0) {
 
 foreach ($aTienda as $producto => $stock) {
     echo "El stock de $producto es $stock" . "<br>";
-}*/
+}
 
+----------------------------------------------------------
 $aClientes = array();
 $aClientes[] = array(
     "dni" => "33.765.012",
@@ -82,4 +83,5 @@ echo "Cantidad de productos:" . contar($aProductos) . "<br>";
 echo "Cantidad de clientes:" . contar($aClientes) . "<br>";
 echo "Cantidad de notas:" . contar($aNotas);
 
-?>
+?>*/
+
