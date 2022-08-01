@@ -38,12 +38,13 @@ if ($_POST) {
         session_destroy();
         $aClientes = array();
     }
+}
 
-    if (isset($_POST["pos"])) {
-        $pos = $_POST["pos"];
-        unset($aClientes["pos"]);
-        $aClientes = array();
-    }
+if (isset($_GET["pos"])) {
+    $pos = $_GET["pos"];
+    unset($aClientes[$pos]);
+    $_SESSION["listadoClientes"] = $aClientes;
+    header("Location: clientes_session.php");
 }
 ?>
 
@@ -100,7 +101,7 @@ if ($_POST) {
                             <th>DNI:</th>
                             <th>Teléfono:</th>
                             <th>Edad:</th>
-                            <th></th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,7 +112,7 @@ if ($_POST) {
                                 <td><?php echo $cliente["telefono"]; ?></td>
                                 <td><?php echo $cliente["edad"]; ?></td>
                                 <td>
-                                    <form method="POST"><button type="submit" id="btnTacho<?php echo $pos;?>" name="btnTacho"><i class="bi bi-trash"></i></button></form>
+                                    <form method="GET"><a href="clientes_session.php?pos=<?php echo $pos?>"><i class="bi bi-trash"></i></a></form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
