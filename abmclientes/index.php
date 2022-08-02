@@ -28,6 +28,7 @@ if ($_POST) {
     $correo = trim($_POST["txtCorreo"]);
     $nombreImagen = "";
 
+    //Si viene una imagen adjunta, la guardo
     if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) {
         $nombreAleatorio = date("Ymdhmsi"); //2021010420453710
         $archivo_tmp = $_FILES["archivo"]["tmp_name"];
@@ -122,39 +123,39 @@ if (isset($_GET["pos"]) && $_GET["do"] == "eliminar") {
                     </div>
                     <div>
                         <button type="submit" name="btnEnviar" id="btnEnviar" class="btn btn-primary d-inline my-2">Guardar</button>
-                        <button type="submit" name="btnEliminar" id="btnEliminar" class="btn btn-danger d-inline my-2"><a href="index.php">Nuevo</a></button>
+                        <a href="index.php" class="btn btn-danger">Nuevo</a>
                     </div>
                 </form>
             </div>
-            <div class="col-8">
-                <table class="table table-hover border">
-                    <thead>
-                        <tr>
-                            <th>Imagen:</th>
-                            <th>DNI:</th>
-                            <th>Nombre:</th>
-                            <th>Correo:</th>
-                            <th>Acciones:</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($aClientes as $pos => $cliente) : ?>
-                            <tr>
-                                <td><img src="imagenes/<?php echo $cliente["imagen"]; ?>" class="img-thumbnail"></td>
-                                <td><?php echo $cliente["dni"]; ?></td>
-                                <td><?php echo $cliente["nombre"]; ?></td>
-                                <td><?php echo $cliente["correo"]; ?></td>
-                                <td>
-                                    <a href="index.php?pos=<?php echo $pos; ?>&do=editar"><i class="bi bi-pencil-square"></i></a>
-                                    <a href="index.php?pos=<?php echo $pos; ?>&do=eliminar"><i class="bi bi-trash"></i></a>
-                                </td>
+            <div class=" col-8">
+                            <table class="table table-hover border">
+                                <thead>
+                                    <tr>
+                                        <th>Imagen:</th>
+                                        <th>DNI:</th>
+                                        <th>Nombre:</th>
+                                        <th>Correo:</th>
+                                        <th>Acciones:</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($aClientes as $pos => $cliente) : ?>
+                                        <tr>
+                                            <td><img src="imagenes/<?php echo $cliente["imagen"]; ?>" class="img-thumbnail"></td>
+                                            <td><?php echo $cliente["dni"]; ?></td>
+                                            <td><?php echo $cliente["nombre"]; ?></td>
+                                            <td><?php echo $cliente["correo"]; ?></td>
+                                            <td>
+                                                <a href="index.php?pos=<?php echo $pos; ?>&do=editar"><i class="bi bi-pencil-square"></i></a>
+                                                <a href="index.php?pos=<?php echo $pos; ?>&do=eliminar"><i class="bi bi-trash"></i></a>
+                                            </td>
 
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                    </div>
             </div>
-        </div>
     </main>
 </body>
 
