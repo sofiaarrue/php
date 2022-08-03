@@ -1,46 +1,47 @@
 <?php
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 //Preguntar si existe el archivo
 if (file_exists("archivo.txt")) {
-    //Vamos a leerlo y almacenar el contenido en jsonClientes
+    //Vamos a leerlo y almacenamos el contenido en jsonClientes
     $jsonClientes = file_get_contents("archivo.txt");
 
     //Convertir jsonClientes en un array llamado aClientes
     $aClientes = json_decode($jsonClientes, true);
-} //Si no existe el archivo
-else {
-    //Creamos un aClientes inicializado como un array vacío
+} else {
+    //Si no existe el archivo, Creamos un aClientes inicializado como un array vacio
     $aClientes = array();
 }
-
 
 $pos = isset($_GET["pos"]) && $_GET["pos"] >= 0 ? $_GET["pos"] : "";
 
 if ($_POST) {
-
     $dni = trim($_POST["txtDni"]);
     $nombre = trim($_POST["txtNombre"]);
     $telefono = trim($_POST["txtTelefono"]);
     $correo = trim($_POST["txtCorreo"]);
     $nombreImagen = "";
 
-    //Si viene una imagen adjunta, la guardo
-    if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) {
-        $nombreAleatorio = date("Ymdhmsi"); //2021010420453710
-        $archivo_tmp = $_FILES["archivo"]["tmp_name"];
-        $extension = strtolower(pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION));
-        if ($extension == "jpg" || $extension == "jpeg" || $extension == "png") {
-            $nombreImagen = "$nombreAleatorio.$extension";
-            move_uploaded_file($archivo_tmp, "imagenes/$nombreImagen");
-        }
-    }
-
     if ($pos >= 0) {
-
+        if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) {
+            $nombreAleatorio = date("Ymdhmsi"); //2021010420453710
+            $archivo_tmp = $_FILES["archivo"]["tmp_name"];
+            $extension = strtolower(pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION));
+            if ($extension == "jpg" || $extension == "jpeg" || $extension == "png") {
+                $nombreImagen = "$nombreAleatorio.$extension";
+                move_uploaded_file($archivo_tmp, "imagenes/$nombreImagen");
+            }
+            //Eliminar la imagen anterior
+            if ($aClientes[$pos]["imagen"] != "" && file_exists("imagenes/" . $aClientes[$pos]["imagen"])) {
+                unlink("imagenes/" . $aClientes[$pos]["imagen"]);
+            }
+        } else {
+            //Mantener el nombreImagen que teniamos antes
+            $nombreImagen = $aClientes[$pos]["imagen"];
+        }
+        //Actualizar
         $aClientes[$pos] = array(
             "dni" => $dni,
             "nombre" => $nombre,
@@ -49,7 +50,16 @@ if ($_POST) {
             "imagen" => $nombreImagen
         );
     } else {
-
+        if ($_FILES["archivo"]["error"] === UPLOAD_ERR_OK) {
+            $nombreAleatorio = date("Ymdhmsi"); //2021010420453710
+            $archivo_tmp = $_FILES["archivo"]["tmp_name"];
+            $extension = strtolower(pathinfo($_FILES["archivo"]["name"], PATHINFO_EXTENSION));
+            if ($extension == "jpg" || $extension == "jpeg" || $extension == "png") {
+                $nombreImagen = "$nombreAleatorio.$extension";
+                move_uploaded_file($archivo_tmp, "imagenes/$nombreImagen");
+            }
+        }
+        //Insertar
         $aClientes[] = array(
             "dni" => $dni,
             "nombre" => $nombre,
@@ -59,20 +69,26 @@ if ($_POST) {
         );
     }
 
-    //Convertir el array de Clientes a jsonClientes
+    //Convertir el array de clientes a jsonClientes
     $jsonClientes = json_encode($aClientes);
 
-    //Almacenar el string jsonClientes en el archivo "archivo.txt"
+    //Almacenar el string jsonClientes en el "archivo.txt"
     file_put_contents("archivo.txt", $jsonClientes);
 }
 
-if (isset($_GET["pos"]) && $_GET["do"] == "eliminar") {
-    //Eliminar el array aClientes
+if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
+    //Eliminar del array aClientes la posición a borrar unset()
     unset($aClientes[$pos]);
+
+    //Convertir el array de clientes a jsonClientes
     $jsonClientes = json_encode($aClientes);
+
+    //Almacenar el string jsonClientes en el "archivo.txt"
     file_put_contents("archivo.txt", $jsonClientes);
+
     header("Location: index.php");
 }
+
 
 ?>
 
