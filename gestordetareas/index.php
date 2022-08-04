@@ -112,11 +112,11 @@ if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
             <div class="row">
                 <div class="col-12">
                     <label for="">Título</label>
-                    <input type="text" name="txtTitulo" id="txtTitulo" class="form-control mb-3" required>
+                    <input type="text" name="txtTitulo" id="txtTitulo" class="form-control mb-3" required value="<?php echo isset($aTareas[$id]) && $aTareas[$id] >= 0 ? $aTareas[$id]["titulo"] : ""; ?>">
                 </div>
                 <div class="col-12">
                     <label for="">Descripción</label>
-                    <input type="text" name="txtDescripcion" id="txtDEscripcion" class="form-control mb-1" required>
+                    <input type="text" name="txtDescripcion" id="txtDescripcion" class="form-control mb-1" required value="<?php echo isset($aTareas[$id]) && $aTareas[$id] >= 0 ? $aTareas[$id]["descripcion"] : ""; ?>">
                 </div>
                 <div class="col-12 text-center mb-2">
                     <button type="submit" name="btnEnviar" id="btnEnviar" class="btn btn-primary d-inline my-2">ENVIAR</button>
@@ -124,49 +124,49 @@ if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
                 </div>
             </div>
         </form>
-        <?php if (count($aTareas) != 0): ?>
-        <div class="row">
-            <div class="col-12">
-                <table class="table table-hover border">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Fecha de inserción</th>
-                            <th>Título</th>
-                            <th>Prioridad</th>
-                            <th>Usuario</th>
-                            <th>Estado</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($aTareas as $pos => $tarea) : ?>
+        <?php if (count($aTareas) != 0) : ?>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover border">
+                        <thead>
                             <tr>
-                                <td><?php echo $pos; ?></td>
-                                <td><?php echo $tarea["fecha"]; ?></td>
-                                <td><?php echo $tarea["titulo"]; ?></td>
-                                <td><?php echo $tarea["prioridad"]; ?></td>
-                                <td><?php echo $tarea["usuario"]; ?></td>
-                                <td><?php echo $tarea["estado"]; ?></td>
-                                <td>
-                                    <a href="index.php?id=<?php echo $pos ?>&do=editar" class="btn btn-secondary d-inline"><i class="bi bi-pencil-square"></i></a>
-                                    <a href="index.php?id=<?php echo $pos ?>&do=eliminar" class="btn btn-danger d-inline"><i class="bi bi-trash"></i></a>
-                                </td>
+                                <th>ID</th>
+                                <th>Fecha de inserción</th>
+                                <th>Título</th>
+                                <th>Prioridad</th>
+                                <th>Usuario</th>
+                                <th>Estado</th>
+                                <th></th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <?php else:?>
-        <div class="row">
-            <div class="col-12">
-                <div class="alert alert-info" role="alert">
-                    Aún no se han cargado tareas.
+                        </thead>
+                        <tbody>
+                            <?php foreach ($aTareas as $pos => $tarea) : ?>
+                                <tr>
+                                    <td><?php echo $pos; ?></td>
+                                    <td><?php echo $tarea["fecha"]; ?></td>
+                                    <td><?php echo $tarea["titulo"]; ?></td>
+                                    <td><?php echo $tarea["prioridad"]; ?></td>
+                                    <td><?php echo $tarea["usuario"]; ?></td>
+                                    <td><?php echo $tarea["estado"]; ?></td>
+                                    <td>
+                                        <a href="index.php?id=<?php echo $pos ?>&do=editar" class="btn btn-secondary d-inline"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="index.php?id=<?php echo $pos ?>&do=eliminar" class="btn btn-danger d-inline"><i class="bi bi-trash"></i></a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-        <?php endif;?>
+        <?php else : ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        Aún no se han cargado tareas.
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
     </main>
 </body>
 
