@@ -165,7 +165,6 @@ if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
                                                 <a href="index.php?pos=<?php echo $pos; ?>&do=editar"><i class="bi bi-pencil-square"></i></a>
                                                 <a href="index.php?pos=<?php echo $pos; ?>&do=eliminar"><i class="bi bi-trash"></i></a>
                                             </td>
-
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
