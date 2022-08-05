@@ -51,8 +51,6 @@ if ($_POST) {
 }
 
 if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
-    $strJson = json_encode($aTareas);
-    file_put_contents("borrado.txt", $strJson);
     unset($aTareas[$id]);
     $strJson = json_encode($aTareas);
     file_put_contents("archivo.txt", $strJson);
@@ -75,100 +73,112 @@ if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
 
 <body>
     <main class="container">
-        <form action="" method="POST">
-            <div class="row">
-                <div class="col-12 text-center py-3">
-                    <h1>Gestor de Tareas</h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4">
-                    <label for="">Prioridad</label>
-                    <select name="lstPrioridad" id="lstPrioridad" class="form-control mb-3" required>
-                        <option value="" disabled selected>Seleccionar</option>
-                        <option value="Alta" <?php echo isset($aTareas[$id]) && $aTareas[$id]["prioridad"] == "Alta" ? "selected" : ""; ?>>Alta</option>
-                        <option value="Media" <?php echo isset($aTareas[$id]) && $aTareas[$id]["prioridad"] == "Media" ? "selected" : ""; ?>>Media</option>
-                        <option value="Baja" <?php echo isset($aTareas[$id]) && $aTareas[$id]["prioridad"] == "Baja" ? "selected" : ""; ?>>Baja</option>
-                    </select>
-                </div>
-                <div class="col-4">
-                    <label for="">Usuario</label>
-                    <select name="lstUsuario" id="lstUsuario" class="form-control mb-3" required>
-                        <option value="" disabled selected>Seleccionar</option>
-                        <option value="Ana" <?php echo isset($aTareas[$id]) && $aTareas[$id]["usuario"] == "Ana" ? "selected" : ""; ?>>Ana</option>
-                        <option value="Bernabe" <?php echo isset($aTareas[$id]) && $aTareas[$id]["usuario"] == "Bernabe" ? "selected" : ""; ?>>Bernabe</option>
-                        <option value="Daniela" <?php echo isset($aTareas[$id]) && $aTareas[$id]["usuario"] == "Daniela" ? "selected" : ""; ?>>Daniela</option>
-                    </select>
-                </div>
-                <div class="col-4">
-                    <label for="">Estado</label>
-                    <select name="lstEstado" id="lstEstado" class="form-control mb-3" required>
-                        <option value="" disabled selected>Seleccionar</option>
-                        <option value="Sin asignar" <?php echo isset($aTareas[$id]) && $aTareas[$id]["estado"] == "Sin asignar" ? "selected" : ""; ?>>Sin asignar</option>
-                        <option value="Asignado" <?php echo isset($aTareas[$id]) && $aTareas[$id]["estado"] == "Asignado" ? "selected" : ""; ?>>Asignado</option>
-                        <option value="En proceso" <?php echo isset($aTareas[$id]) && $aTareas[$id]["estado"] == "En proceso" ? "selected" : ""; ?>>En proceso</option>
-                        <option value="Terminado" <?php echo isset($aTareas[$id]) && $aTareas[$id]["estado"] == "Terminado" ? "selected" : ""; ?>>Terminado</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <label for="">Título</label>
-                    <input type="text" name="txtTitulo" id="txtTitulo" class="form-control mb-3" required value="<?php echo isset($aTareas[$id]) && $aTareas[$id] >= 0 ? $aTareas[$id]["titulo"] : ""; ?>">
-                </div>
-                <div class="col-12">
-                    <label for="">Descripción</label>
-                    <input type="text" name="txtDescripcion" id="txtDescripcion" class="form-control mb-1" required value="<?php echo isset($aTareas[$id]) && $aTareas[$id] >= 0 ? $aTareas[$id]["descripcion"] : ""; ?>">
-                </div>
-                <div class="col-12 text-center mb-2">
-                    <button type="submit" name="btnEnviar" id="btnEnviar" class="btn btn-primary d-inline my-2">ENVIAR</button>
-                    <button type="submit" name="btnCancelar" id="btnCancelar" class="btn btn-secondary d-inline my-2">CANCELAR</button>
-                </div>
-            </div>
-        </form>
-        <?php if (count($aTareas) != 0) : ?>
-            <div class="row">
-                <div class="col-12">
-                    <table class="table table-hover border">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Fecha de inserción</th>
-                                <th>Título</th>
-                                <th>Prioridad</th>
-                                <th>Usuario</th>
-                                <th>Estado</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($aTareas as $pos => $tarea) : ?>
-                                <tr>
-                                    <td><?php echo $pos; ?></td>
-                                    <td><?php echo $tarea["fecha"]; ?></td>
-                                    <td><?php echo $tarea["titulo"]; ?></td>
-                                    <td><?php echo $tarea["prioridad"]; ?></td>
-                                    <td><?php echo $tarea["usuario"]; ?></td>
-                                    <td><?php echo $tarea["estado"]; ?></td>
-                                    <td>
-                                        <a href="index.php?id=<?php echo $pos ?>&do=editar" class="btn btn-secondary d-inline"><i class="bi bi-pencil-square"></i></a>
-                                        <a href="index.php?id=<?php echo $pos ?>&do=eliminar" class="btn btn-danger d-inline"><i class="bi bi-trash"></i></a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        <?php else : ?>
-            <div class="row">
-                <div class="col-12">
-                    <div class="alert alert-info" role="alert">
-                        Aún no se han cargado tareas.
+        <section>
+            <form action="" method="POST">
+                <div class="row">
+                    <div class="col-12 text-center py-3">
+                        <h1>Gestor de Tareas</h1>
                     </div>
                 </div>
-            </div>
-        <?php endif; ?>
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <a href="index.php" class=" btn btn-info">TODAS (<?php echo isset($aTareas) ? count($aTareas): 0;?>)</a>
+                        <a href="eliminadas.php" class="btn btn-danger">ELIMINADAS <?php ?></a>
+                        <a href="terminadas.php" class="btn btn-success">TERMINADAS </a>
+                        <a href="pendientes.php" class="btn btn-warning">PENDIENTES</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label for="">Prioridad</label>
+                        <select name="lstPrioridad" id="lstPrioridad" class="form-control mb-3" required>
+                            <option value="" disabled selected>Seleccionar</option>
+                            <option value="Alta" <?php echo isset($aTareas[$id]) && $aTareas[$id]["prioridad"] == "Alta" ? "selected" : ""; ?>>Alta</option>
+                            <option value="Media" <?php echo isset($aTareas[$id]) && $aTareas[$id]["prioridad"] == "Media" ? "selected" : ""; ?>>Media</option>
+                            <option value="Baja" <?php echo isset($aTareas[$id]) && $aTareas[$id]["prioridad"] == "Baja" ? "selected" : ""; ?>>Baja</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label for="">Usuario</label>
+                        <select name="lstUsuario" id="lstUsuario" class="form-control mb-3" required>
+                            <option value="" disabled selected>Seleccionar</option>
+                            <option value="Ana" <?php echo isset($aTareas[$id]) && $aTareas[$id]["usuario"] == "Ana" ? "selected" : ""; ?>>Ana</option>
+                            <option value="Bernabe" <?php echo isset($aTareas[$id]) && $aTareas[$id]["usuario"] == "Bernabe" ? "selected" : ""; ?>>Bernabe</option>
+                            <option value="Daniela" <?php echo isset($aTareas[$id]) && $aTareas[$id]["usuario"] == "Daniela" ? "selected" : ""; ?>>Daniela</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <label for="">Estado</label>
+                        <select name="lstEstado" id="lstEstado" class="form-control mb-3" required>
+                            <option value="" disabled selected>Seleccionar</option>
+                            <option value="Sin asignar" <?php echo isset($aTareas[$id]) && $aTareas[$id]["estado"] == "Sin asignar" ? "selected" : ""; ?>>Sin asignar</option>
+                            <option value="Asignado" <?php echo isset($aTareas[$id]) && $aTareas[$id]["estado"] == "Asignado" ? "selected" : ""; ?>>Asignado</option>
+                            <option value="En proceso" <?php echo isset($aTareas[$id]) && $aTareas[$id]["estado"] == "En proceso" ? "selected" : ""; ?>>En proceso</option>
+                            <option value="Terminado" <?php echo isset($aTareas[$id]) && $aTareas[$id]["estado"] == "Terminado" ? "selected" : ""; ?>>Terminado</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label for="">Título</label>
+                        <input type="text" name="txtTitulo" id="txtTitulo" class="form-control mb-3" required value="<?php echo isset($aTareas[$id]) && $aTareas[$id] >= 0 ? $aTareas[$id]["titulo"] : ""; ?>">
+                    </div>
+                    <div class="col-12">
+                        <label for="">Descripción</label>
+                        <input type="text" name="txtDescripcion" id="txtDescripcion" class="form-control mb-1" required value="<?php echo isset($aTareas[$id]) && $aTareas[$id] >= 0 ? $aTareas[$id]["descripcion"] : ""; ?>">
+                    </div>
+                    <div class="col-12 text-center mb-2">
+                        <button type="submit" name="btnEnviar" id="btnEnviar" class="btn btn-primary d-inline my-2">ENVIAR</button>
+                        <button type="submit" name="btnCancelar" id="btnCancelar" class="btn btn-secondary d-inline my-2">CANCELAR</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <section>
+            <?php if (count($aTareas) != 0) : ?>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-hover border">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Fecha de inserción</th>
+                                    <th>Título</th>
+                                    <th>Prioridad</th>
+                                    <th>Usuario</th>
+                                    <th>Estado</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($aTareas as $pos => $tarea) : ?>
+                                    <tr>
+                                        <td><?php echo $pos; ?></td>
+                                        <td><?php echo $tarea["fecha"]; ?></td>
+                                        <td><?php echo $tarea["titulo"]; ?></td>
+                                        <td><?php echo $tarea["prioridad"]; ?></td>
+                                        <td><?php echo $tarea["usuario"]; ?></td>
+                                        <td><?php echo $tarea["estado"]; ?></td>
+                                        <td>
+                                            <a href="index.php?id=<?php echo $pos ?>&do=editar" class="btn btn-secondary d-inline"><i class="bi bi-pencil-square"></i></a>
+                                            <a href="index.php?id=<?php echo $pos ?>&do=eliminar" class="btn btn-danger d-inline"><i class="bi bi-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <?php else : ?>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-info" role="alert">
+                            Aún no se han cargado tareas.
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </section>
     </main>
 </body>
 
