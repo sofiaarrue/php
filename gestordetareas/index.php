@@ -29,7 +29,7 @@ if ($_POST) {
             "usuario" => $usuario,
             "estado" => $estado,
             "titulo" => $titulo,
-            "descripcion" => $descripcion
+            "descripcion" => $descripcion,
         );
     } else {
         //Insertar una tarea
@@ -51,6 +51,8 @@ if ($_POST) {
 }
 
 if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
+    $strJson = json_encode($aTareas);
+    file_put_contents("borrado.txt", $strJson);
     unset($aTareas[$id]);
     $strJson = json_encode($aTareas);
     file_put_contents("archivo.txt", $strJson);
