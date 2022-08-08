@@ -29,7 +29,7 @@ if ($_POST) {
             "usuario" => $usuario,
             "estado" => $estado,
             "titulo" => $titulo,
-            "descripcion" => $descripcion,
+            "descripcion" => $descripcion
         );
     } else {
         //Insertar una tarea
@@ -43,6 +43,14 @@ if ($_POST) {
         );
     }
 
+    function contar($aArray){
+        $contador = 0;
+        foreach ($aArray as $pos => $item) {
+            $contador++;
+        }
+        return $contador;
+    }
+
     //Convertir el array de aTareas en json
     $strJson = json_encode($aTareas);
 
@@ -51,6 +59,8 @@ if ($_POST) {
 }
 
 if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
+    
+    
     unset($aTareas[$id]);
     $strJson = json_encode($aTareas);
     file_put_contents("archivo.txt", $strJson);
@@ -82,9 +92,9 @@ if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
                 </div>
                 <div class="row mb-4">
                     <div class="col-12">
-                        <a href="index.php" class=" btn btn-info">TODAS (<?php echo isset($aTareas) ? count($aTareas): 0;?>)</a>
-                        <a href="eliminadas.php" class="btn btn-danger">ELIMINADAS <?php ?></a>
-                        <a href="terminadas.php" class="btn btn-success">TERMINADAS </a>
+                        <a href="index.php" class=" btn btn-info">TODAS (<?php echo isset($aTareas) ? count($aTareas) : 0; ?>)</a>
+                        <a href="eliminadas.php" class="btn btn-danger">ELIMINADAS</a>
+                        <a href="terminadas.php" class="btn btn-success">TERMINADAS (<?php foreach ($aTareas as $pos => $tarea) {if (isset($aTareas) && $tarea["estado"] == "Terminado"){echo count($tarea["estado"]);} else {0;}} ?>)</a>
                         <a href="pendientes.php" class="btn btn-warning">PENDIENTES</a>
                     </div>
                 </div>

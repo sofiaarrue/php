@@ -1,0 +1,1 @@
+echo isset($aTareas) && $aTareas["estado"] == "Terminado" ? array_count_values($aTareas["estado"]): 0;
