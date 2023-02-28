@@ -14,7 +14,7 @@ if (isset($_POST["op"])) {
 
 $resultado = $item . $op;
 
-$aNumeros = preg_split("/ /", $resultado);
+$aNumeros = explode("+-*/", $resultado);
 print_r($aNumeros);
 exit;
 

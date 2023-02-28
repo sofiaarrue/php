@@ -1,8 +1,6 @@
 <?php
-    if ($_POST) {
-        
-    $resultado="";
 
+if ($_POST) {
     if ($_POST["slcOperacion"] == "+") {
         $resultado = $_POST["num1"] + $_POST["num2"];
     } else if ($_POST["slcOperacion"] == "-") {
@@ -12,7 +10,9 @@
     } else {
         $resultado = $_POST["num1"] / $_POST["num2"];
     }
-    }
+} else {
+    $resultado = "";
+}
 
 ?>
 
@@ -28,7 +28,7 @@
 
 <body>
     <h2>Calculadora 1 </h2>
-    <form action="calculadora1.php" method="$_POST">
+    <form action="calculadora1.php" method="post">
         <input type="text" name="num1" id="num1">
         <select name="slcOperacion" id="slcOperacion">
             <option value="+">+</option>
