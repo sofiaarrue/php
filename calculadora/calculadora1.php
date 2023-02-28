@@ -1,22 +1,18 @@
 <?php
-if ($_POST) {
+    if ($_POST) {
+        
+    $resultado="";
 
-    $num1 = $_REQUEST["num1"];
-    $num2 = $_REQUEST["num2"];
-    $slcOperacion = $_REQUEST["slcOperacion"];
-    
-    
-    if ($slcOperacion == "+") {
-        $resultado = $num1 + $num2;
-    } else if ($slcOperacion == "-") {
-        $resultado = $num1 - $num2;
-    } else if ($slcOperacion == "*") {
-        $resultado = $num1 * $num2;
+    if ($_POST["slcOperacion"] == "+") {
+        $resultado = $_POST["num1"] + $_POST["num2"];
+    } else if ($_POST["slcOperacion"] == "-") {
+        $resultado = $_POST["num1"] - $_POST["num2"];
+    } else if ($_POST["slcOperacion"] == "*") {
+        $resultado = $_POST["num1"] * $_POST["num2"];
     } else {
-        $resultado = $num1 / $num2;
+        $resultado = $_POST["num1"] / $_POST["num2"];
     }
-}
-
+    }
 
 ?>
 
