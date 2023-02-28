@@ -14,6 +14,8 @@ if (file_exists("archivo.txt")) {
 
 if (isset($_GET["id"]) && $_GET["id"] >= 0 ? $id = $_GET["id"] : $id = "");
 
+if (isset($_GET["estado"]) && ($_GET["estado"] == "Terminado" || $_GET["estado"] == "Pendiente") ? $estado = $_GET["estado"] : $estado = "");
+
 if ($_POST) {
     $prioridad = $_POST["lstPrioridad"];
     $usuario = $_POST["lstUsuario"];
@@ -43,14 +45,6 @@ if ($_POST) {
         );
     }
 
-    function contar($aArray){
-        $contador = 0;
-        foreach ($aArray as $pos => $item) {
-            $contador++;
-        }
-        return $contador;
-    }
-
     //Convertir el array de aTareas en json
     $strJson = json_encode($aTareas);
 
@@ -59,17 +53,25 @@ if ($_POST) {
 }
 
 if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
-    
-    
     unset($aTareas[$id]);
     $strJson = json_encode($aTareas);
     file_put_contents("archivo.txt", $strJson);
     header("Location: index.php");
 }
+
+
+function contarTareas($aArray, $estado = "")
+{
+    $contador = 0;
+    foreach ($aArray as $item) {
+        $contador++;
+    }
+    return $contador;
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -88,14 +90,6 @@ if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
                 <div class="row">
                     <div class="col-12 text-center py-3">
                         <h1>Gestor de Tareas</h1>
-                    </div>
-                </div>
-                <div class="row mb-4">
-                    <div class="col-12">
-                        <a href="index.php" class=" btn btn-info">TODAS (<?php echo isset($aTareas) ? count($aTareas) : 0; ?>)</a>
-                        <a href="eliminadas.php" class="btn btn-danger">ELIMINADAS</a>
-                        <a href="terminadas.php" class="btn btn-success">TERMINADAS (<?php foreach ($aTareas as $pos => $tarea) {if (isset($aTareas) && $tarea["estado"] == "Terminado"){echo count($tarea["estado"]);} else {0;}} ?>)</a>
-                        <a href="pendientes.php" class="btn btn-warning">PENDIENTES</a>
                     </div>
                 </div>
                 <div class="row">
@@ -146,39 +140,61 @@ if (isset($_GET["do"]) && $_GET["do"] == "eliminar") {
         </section>
         <section>
             <?php if (count($aTareas) != 0) : ?>
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col-12">
-                        <table class="table table-hover border">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Fecha de inserción</th>
-                                    <th>Título</th>
-                                    <th>Prioridad</th>
-                                    <th>Usuario</th>
-                                    <th>Estado</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($aTareas as $pos => $tarea) : ?>
-                                    <tr>
-                                        <td><?php echo $pos; ?></td>
-                                        <td><?php echo $tarea["fecha"]; ?></td>
-                                        <td><?php echo $tarea["titulo"]; ?></td>
-                                        <td><?php echo $tarea["prioridad"]; ?></td>
-                                        <td><?php echo $tarea["usuario"]; ?></td>
-                                        <td><?php echo $tarea["estado"]; ?></td>
-                                        <td>
-                                            <a href="index.php?id=<?php echo $pos ?>&do=editar" class="btn btn-secondary d-inline"><i class="bi bi-pencil-square"></i></a>
-                                            <a href="index.php?id=<?php echo $pos ?>&do=eliminar" class="btn btn-danger d-inline"><i class="bi bi-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                        <a href="index.php" class=" btn btn-info">TODAS (<?php echo contarTareas($aTareas); ?>)</a>
+                        <a href="index.php?estado=<?php echo "Eliminado"; ?>" class="btn btn-danger">ELIMINADAS (<?php echo contarTareas($aTareas, "Eliminado"); ?>) </a>
+                        <a href="index.php?estado=<?php echo "Terminado"; ?>" class="btn btn-success">TERMINADAS (<?php echo contarTareas($aTareas, "Terminado"); ?>)</a>
+                        <a href="index.php?estado=<?php echo "Pendiente"; ?>" class="btn btn-warning">PENDIENTES (<?php echo contarTareas($aTareas, "En proceso"); ?>) </a>
                     </div>
                 </div>
+                <?php foreach ($aTareas as $pos => $tarea) : ?>
+                    <?php if (isset($estado) && $estado == "Terminado") :
+                        if ($tarea["estado"] == "Terminado") : ?>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table table-hover border">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Fecha de inserción</th>
+                                                <th>Título</th>
+                                                <th>Prioridad</th>
+                                                <th>Usuario</th>
+                                                <th>Estado</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td><?php echo $pos; ?></td>
+                                                <td><?php echo $tarea["fecha"]; ?></td>
+                                                <td><?php echo $tarea["titulo"]; ?></td>
+                                                <td><?php echo $tarea["prioridad"]; ?></td>
+                                                <td><?php echo $tarea["usuario"]; ?></td>
+                                                <td><?php echo $tarea["estado"]; ?></td>
+                                                <td>
+                                                    <a href="index.php?id=<?php echo $pos ?>&do=editar" class="btn btn-secondary d-inline"><i class="bi bi-pencil-square"></i></a>
+                                                    <a href="index.php?id=<?php echo $pos ?>&do=eliminar" class="btn btn-danger d-inline"><i class="bi bi-trash"></i></a>
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        <?php else : ?>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="alert alert-info" role="alert">
+                                        Aún no hay tareas terminadas.
+                                    </div>
+                                </div>
+                            </div>
+                    <?php endif;
+                    endif; ?>
+                <?php endforeach; ?>
             <?php else : ?>
                 <div class="row">
                     <div class="col-12">

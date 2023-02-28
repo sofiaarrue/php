@@ -14,7 +14,6 @@ if (file_exists("invitados.txt")) {
 }
 
 if($_POST){
-
     if(isset($_POST["btnInvitado"])){
         $dni = $_POST["txtDni"];
         //si el dni ingresado se encuentra en la lista se mostrara un mensaje de bienvenida
@@ -69,7 +68,7 @@ if($_POST){
                     <label for="txtDni">Ingrese el DNI:</label>
                 </div>
                 <div class="col-8 pb-2">
-                    <input type="text" name="txtDni" id="txtDni" class="form-control">
+                    <input type="number" name="txtDni" id="txtDni" class="form-control">
                 </div>
                 <div class="col-8 pb-2">
                     <button type="submit" name="btnInvitado" id="btnInvitado" class="btn btn-primary">Verificar invitado</button>
