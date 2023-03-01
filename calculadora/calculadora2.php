@@ -14,13 +14,14 @@ if (isset($_POST["op"])) {
 
 $resultado = $item . $op;
 $aNumeros = array();
-
-while ($resultado != $op) {
+$aNumeros[] = intval($resultado);
+print_r($aNumeros);
+/*while ($resultado != $op) {
     $aNumeros[] = intval($resultado);
     if (isset($op)) {
         continue;
     }
-}
+}*/
 
 print_r(intval($resultado));
 
