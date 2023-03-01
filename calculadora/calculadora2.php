@@ -13,13 +13,19 @@ if (isset($_POST["op"])) {
 }
 
 $resultado = $item . $op;
+$aNumeros = array();
 
-$aNumeros = explode("+-*/", $resultado);
-print_r($aNumeros);
-exit;
+while ($resultado != $op) {
+    $aNumeros[] = intval($resultado);
+    if (isset($op)) {
+        continue;
+    }
+}
+
+print_r(intval($resultado));
 
 if (isset($_POST["igual"])) {
-    # swith ($op){}
+    
 }
 
 #mientras que item sea distinto de op, almacenar item en un array. en el switch sumar, restar, etc. los elementos de ese array.
