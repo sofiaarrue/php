@@ -9,27 +9,33 @@ if (isset($_POST["item"])) {
 if (isset($_POST["op"])) {
     $op = $_POST["pantalla"] . $_POST["op"];
 } else {
-    $op = ""; 
+    $op = "";
 }
 
 $resultado = $item . $op;
-$aNumeros = array();
-$aNumeros[] = intval($resultado);
+
+$aNumeros = explode("+", $resultado);
+
 print_r($aNumeros);
-/*while ($resultado != $op) {
-    $aNumeros[] = intval($resultado);
-    if (isset($op)) {
-        continue;
+
+$op = isset($_POST["op"]);
+$igual = isset($_POST["igual"]);
+
+if ($igual) {
+    if ($op) {
+        switch ($_POST["op"]) {
+            case "+":
+                $resultado == array_sum($aNumeros);
+                break;
+            case "-":
+                $resultado == "hola";
+                break;
+        }
     }
-}*/
-
-print_r(intval($resultado));
-
-if (isset($_POST["igual"])) {
-    
+} else {
+    # code...
 }
 
-#mientras que item sea distinto de op, almacenar item en un array. en el switch sumar, restar, etc. los elementos de ese array.
 
 ?>
 
