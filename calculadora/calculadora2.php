@@ -17,25 +17,25 @@ $resultado = $item . $op;
 $aNumeros = explode("+", $resultado);
 
 print_r($aNumeros);
+print_r(array_sum($aNumeros));
 
-$op = isset($_POST["op"]);
-$igual = isset($_POST["igual"]);
 
-if ($igual) {
-    if ($op) {
-        switch ($_POST["op"]) {
-            case "+":
-                $resultado == array_sum($aNumeros);
-                break;
-            case "-":
-                $resultado == "hola";
-                break;
-        }
+if (isset($_POST["igual"])) {
+
+    if (isset($_POST["op"]) && $_POST["op"] == "+") {
+        $resultado = array_sum($aNumeros);
     }
 } else {
-    # code...
+    $igual = "";
 }
 
+if (isset($_POST["btnCE"])) {
+    $resultado = "";
+}
+
+if (isset($_POST["btnCE"])) {
+    $resultado = "";;
+}
 
 ?>
 
@@ -64,9 +64,9 @@ if ($igual) {
                     <td colspan="4"> <input type="text" name="pantalla" id="pantalla" class="form-control" value="<?php echo $resultado; ?>"></td>
 
                 <tr>
-                    <td class="text-center"> <button class="btn btn-primary" type="submit" name="btn"><-- </button></td>
-                    <td class="text-center"> <button class="btn btn-primary" type="submit" name="btn"> CE </button></td>
-                    <td class="text-center"> <button class="btn btn-primary" type="submit" name="btn"> C </button></td>
+                    <td class="text-center"> <button class="btn btn-primary" type="submit" name="btnCE1"> <-- </button></td>
+                    <td class="text-center"> <button class="btn btn-primary" type="submit" name="btnCE"> CE </button></td>
+                    <td class="text-center"> <button class="btn btn-primary" type="submit" name="btnCE"> C </button></td>
                     <td class="text-center"> <button class="btn btn-primary" type="submit" name="op" value="/"> / </button></td>
                 </tr>
                 <tr>
